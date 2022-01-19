@@ -1,4 +1,6 @@
 import React, { ChangeEvent, FormEvent } from 'react';
+import { useEffect, useRef } from 'react';
+
 import { Typography, makeStyles, TextField, Grid, Button, InputLabel, Theme } from '@material-ui/core';
 import { useAppState } from '../../../state';
 
@@ -45,9 +47,36 @@ export default function RoomNameScreen({ name, roomName, setName, setRoomName, h
 
   const handleRoomNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setRoomName(event.target.value);
+    console.log(event.target.value);
   };
 
   const hasUsername = !window.location.search.includes('customIdentity=true') && user?.displayName;
+
+  const query = new URLSearchParams(window.location.search);
+  console.log('Room Name Screen ....');
+  console.log(window.sessionStorage.getItem('passcode'));
+  console.log(window.sessionStorage.getItem('roomname'));
+  console.log(window.sessionStorage.getItem('username'));
+
+  name = window.sessionStorage.getItem('username') as string;
+  if (name != '') setName(name);
+  roomName = window.sessionStorage.getItem('roomname') as string;
+  if (roomName != '') setRoomName(roomName);
+
+  let form = useRef(null);
+  console.log(form);
+  console.log(form.current);
+  if (form.current !== null) {
+    console.log('yes');
+    //form.current.submit();
+  }
+  useEffect(() => {
+    console.log('use effect');
+    console.log(form.current);
+    //form.current.submit();
+  }, [form]);
+
+  const disabled = true;
 
   return (
     <>
@@ -59,7 +88,7 @@ export default function RoomNameScreen({ name, roomName, setName, setRoomName, h
           ? "Enter the name of a room you'd like to join."
           : "Enter your name and the name of a room you'd like to join"}
       </Typography>
-      <form onSubmit={handleSubmit}>
+      <form ref={form} onSubmit={handleSubmit}>
         <div className={classes.inputContainer}>
           {!hasUsername && (
             <div className={classes.textFieldContainer}>
@@ -73,6 +102,7 @@ export default function RoomNameScreen({ name, roomName, setName, setRoomName, h
                 size="small"
                 value={name}
                 onChange={handleNameChange}
+                disabled={disabled}
               />
             </div>
           )}
@@ -88,6 +118,7 @@ export default function RoomNameScreen({ name, roomName, setName, setRoomName, h
               size="small"
               value={roomName}
               onChange={handleRoomNameChange}
+              disabled={disabled}
             />
           </div>
         </div>
