@@ -54,15 +54,15 @@ export default function RoomNameScreen({ name, roomName, setName, setRoomName, h
 
   let form = useRef(null);
   useEffect(() => {
-    console.clear();
-    console.log('------ use effect -------');
-    console.log(form.current);
+    //console.clear();
+    //console.log('------ use effect -------');
+    //console.log(form.current);
     //form.current.submit();
 
     const query = new URLSearchParams(window.location.search);
-    console.log('Room Name Screen ....');
-    console.log('Storage Room Name : ' + window.sessionStorage.getItem('roomname'));
-    console.log('Storage User Name : ' + window.sessionStorage.getItem('username'));
+    //console.log('Room Name Screen ....');
+    //console.log("Storage Room Name : " + window.sessionStorage.getItem('roomname'));
+    //console.log("Storage User Name : " + window.sessionStorage.getItem('username'));
 
     name = window.sessionStorage.getItem('username') as string;
     if (name != '') setName(name);
@@ -70,16 +70,16 @@ export default function RoomNameScreen({ name, roomName, setName, setRoomName, h
     if (roomName != '') setRoomName(roomName);
 
     if (name != '' && roomName != '') {
-      console.log('DO FORM SUBMIT...');
+      //console.log('DO FORM SUBMIT...');
       //document.forms[0].submit();
       //document.forms[0].elements["continue-button"].click();
       //document.forms[0].elements[4].click();
       //let element: HTMLElement = document.getElementById('continue-button')[0] as HTMLElement;
       //element.click();
       let element: HTMLElement = document.getElementById('continue-button') as HTMLElement;
-      console.log(element);
+      //console.log(element);
       setTimeout(() => {
-        console.log('Click');
+        //console.log('Click');
         element.click();
       }, 300);
     }

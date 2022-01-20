@@ -5,16 +5,18 @@ const endpoint = process.env.REACT_APP_TOKEN_ENDPOINT || '/token';
 
 export function getPasscode() {
   const match = window.location.search.match(/passcode=(.*)&?/);
-  console.log(match);
+  //console.log(match);
   const query = new URLSearchParams(window.location.search);
 
-  console.log('Get Passcode Function : ');
-  console.log(query.get('passcode'));
-  console.log(query.get('roomname'));
-  console.log(query.get('username'));
+  //console.log('Get Passcode Function : ');
+  //console.log(query.get('passcode'));
+  //console.log(query.get('roomname'));
+  //console.log(query.get('username'));
+  //console.log(query.get('brand'));
 
   if (query.get('roomname') != '') window.sessionStorage.setItem('roomname', query.get('roomname') as string);
   if (query.get('username') != '') window.sessionStorage.setItem('username', query.get('username') as string);
+  if (query.get('brand') != '') window.sessionStorage.setItem('brand', query.get('brand') as string);
 
   const passcode = query.get('passcode') ? query.get('passcode') : window.sessionStorage.getItem('passcode');
 

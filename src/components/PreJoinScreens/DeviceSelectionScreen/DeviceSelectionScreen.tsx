@@ -13,6 +13,7 @@ import useVideoContext from '../../../hooks/useVideoContext/useVideoContext';
 const useStyles = makeStyles((theme: Theme) => ({
   gutterBottom: {
     marginBottom: '1em',
+    display: 'none',
   },
   marginTop: {
     marginTop: '1em',
@@ -90,7 +91,7 @@ export default function DeviceSelectionScreen({ name, roomName, setStep }: Devic
   return (
     <>
       <Typography variant="h5" className={classes.gutterBottom}>
-        Join {roomName}
+        Join Room
       </Typography>
 
       <Grid container justifyContent="center">
@@ -115,9 +116,7 @@ export default function DeviceSelectionScreen({ name, roomName, setStep }: Devic
               </Hidden>
             </div>
             <div className={classes.joinButtons}>
-              <Button variant="outlined" color="primary" onClick={() => setStep(Steps.roomNameStep)}>
-                Cancel
-              </Button>
+              &nbsp;
               <Button
                 variant="contained"
                 color="primary"

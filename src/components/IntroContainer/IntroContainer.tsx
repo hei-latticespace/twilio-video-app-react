@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   swooshContainer: {
     position: 'relative',
-    display: 'flex',
+    //display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundImage: Swoosh,
@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme: Theme) => ({
       height: '100px',
       backgroundPositionY: '140px',
     },
+    display: 'none',
   },
   logoContainer: {
     position: 'absolute',
@@ -64,11 +65,35 @@ const useStyles = makeStyles((theme: Theme) => ({
       },
     },
   },
+  logoInnerContainer: {
+    overflow: 'hidden',
+    '& img': {
+      borderRadius: '20px',
+      width: '100px',
+      height: '100px',
+    },
+  },
   twilioLogo: {
     position: 'absolute',
     top: 0,
     left: 0,
     margin: '20px',
+  },
+  brandLogo: {
+    width: '40px',
+    height: '40px',
+    position: 'absolute',
+    top: '0px',
+    left: '0px',
+    margin: '20px',
+    borderRadius: '5px',
+    overflow: 'hidden',
+    '& img': {
+      width: 'auto',
+      height: 'auto',
+      maxWidth: '100%',
+      maxHeight: '100%',
+    },
   },
   content: {
     background: 'white',
@@ -98,17 +123,22 @@ const IntroContainer = (props: IntroContainerProps) => {
   const { user } = useAppState();
   const location = useLocation();
 
+  const brand = window.sessionStorage.getItem('brand') as string;
+
   return (
     <div className={classes.background}>
-      <TwilioLogo className={classes.twilioLogo} />
-      {user && location.pathname !== '/login' && <UserMenu />}
+      <div className={classes.brandLogo}>
+        <TwilioLogo />
+      </div>
       <div className={classes.container}>
         <div className={classes.innerContainer}>
           <div className={classes.swooshContainer}>
             <div className={classes.logoContainer}>
-              <VideoLogo />
+              <div className={classes.logoInnerContainer}>
+                <VideoLogo />
+              </div>
               <Typography variant="h6" className={classes.title}>
-                Twilio Programmable Video
+                {brand}
               </Typography>
             </div>
           </div>
