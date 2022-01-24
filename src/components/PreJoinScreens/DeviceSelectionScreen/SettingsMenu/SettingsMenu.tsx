@@ -64,7 +64,7 @@ export default function SettingsMenu({ mobileButtonClass }: { mobileButtonClass?
           horizontal: 'center',
         }}
       >
-        <MenuItem onClick={() => setAboutOpen(true)}>
+        <MenuItem onClick={() => setAboutOpen(true)} style={{ display: 'none' }}>
           <Typography variant="body1">About</Typography>
         </MenuItem>
         <MenuItem onClick={() => setDeviceSettingsOpen(true)}>

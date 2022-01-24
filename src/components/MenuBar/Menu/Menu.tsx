@@ -122,6 +122,7 @@ export default function Menu(props: { buttonClassName?: string }) {
         )}
 
         <MenuItem
+          style={{ display: 'none' }}
           onClick={() => {
             VideoRoomMonitor.toggleMonitor();
             setMenuOpen(false);
@@ -133,7 +134,7 @@ export default function Menu(props: { buttonClassName?: string }) {
           <Typography variant="body1">Room Monitor</Typography>
         </MenuItem>
 
-        <MenuItem onClick={() => setAboutOpen(true)}>
+        <MenuItem onClick={() => setAboutOpen(true)} style={{ display: 'none' }}>
           <IconContainer>
             <InfoIconOutlined />
           </IconContainer>
