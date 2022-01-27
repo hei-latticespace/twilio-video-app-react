@@ -40,8 +40,15 @@ const useStyles = makeStyles((theme: Theme) => ({
       marginRight: '0.4em',
     },
   },
+  flexCenter: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+  },
   gutterBottom: {
-    marginBottom: '1em',
+    textAlign: 'center',
+    fontSize: '1.3em',
   },
   passcodeContainer: {
     minHeight: '120px',
@@ -101,44 +108,13 @@ export default function LoginPage() {
 
       {process.env.REACT_APP_SET_AUTH === 'passcode' && (
         <>
-          <Typography variant="h5" className={classes.gutterBottom}>
-            Enter passcode to join a room
-          </Typography>
-          <form onSubmit={handleSubmit}>
-            <Grid container justifyContent="space-between">
-              <div className={classes.passcodeContainer}>
-                <InputLabel shrink htmlFor="input-passcode">
-                  Passcode
-                </InputLabel>
-                <TextField
-                  id="input-passcode"
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => setPasscode(e.target.value)}
-                  type="password"
-                  variant="outlined"
-                  size="small"
-                />
-                <div>
-                  {authError && (
-                    <Typography variant="caption" className={classes.errorMessage}>
-                      <ErrorOutlineIcon />
-                      {authError.message}
-                    </Typography>
-                  )}
-                </div>
-              </div>
-            </Grid>
-            <Grid container justifyContent="flex-end">
-              <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-                disabled={!passcode.length}
-                className={classes.submitButton}
-              >
-                Submit
-              </Button>
-            </Grid>
-          </form>
+          <div className={classes.flexCenter}>
+            <Typography variant="h5" className={classes.gutterBottom}>
+              Link is expired
+              <br />
+              Please generate the link again
+            </Typography>
+          </div>
         </>
       )}
     </IntroContainer>
