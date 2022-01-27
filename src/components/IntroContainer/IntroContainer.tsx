@@ -134,9 +134,6 @@ const IntroContainer = (props: IntroContainerProps) => {
         <div className={classes.innerContainer}>
           <div className={classes.swooshContainer}>
             <div className={classes.logoContainer}>
-              <div className={classes.logoInnerContainer}>
-                <VideoLogo />
-              </div>
               <Typography variant="h6" className={classes.title}>
                 {brand}
               </Typography>

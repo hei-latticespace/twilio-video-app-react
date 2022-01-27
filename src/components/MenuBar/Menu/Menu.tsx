@@ -133,13 +133,6 @@ export default function Menu(props: { buttonClassName?: string }) {
           </IconContainer>
           <Typography variant="body1">Room Monitor</Typography>
         </MenuItem>
-
-        <MenuItem onClick={() => setAboutOpen(true)} style={{ display: 'none' }}>
-          <IconContainer>
-            <InfoIconOutlined />
-          </IconContainer>
-          <Typography variant="body1">About</Typography>
-        </MenuItem>
       </MenuContainer>
       <AboutDialog
         open={aboutOpen}

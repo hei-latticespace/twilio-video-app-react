@@ -4,23 +4,8 @@ import { useHistory } from 'react-router-dom';
 const endpoint = process.env.REACT_APP_TOKEN_ENDPOINT || '/token';
 
 export function getPasscode() {
-  const match = window.location.search.match(/passcode=(.*)&?/);
-  //console.log(match);
   const query = new URLSearchParams(window.location.search);
-
-  //console.log('Get Passcode Function : ');
-  //console.log(query.get('passcode'));
-  //console.log(query.get('roomname'));
-  //console.log(query.get('username'));
-  //console.log(query.get('brand'));
-
-  if (query.get('roomname') != '') window.sessionStorage.setItem('roomname', query.get('roomname') as string);
-  if (query.get('username') != '') window.sessionStorage.setItem('username', query.get('username') as string);
-  if (query.get('brand') != '') window.sessionStorage.setItem('brand', query.get('brand') as string);
-
   const passcode = query.get('passcode') ? query.get('passcode') : window.sessionStorage.getItem('passcode');
-
-  //const passcode = match ? match[1] : window.sessionStorage.getItem('passcode');
   return passcode;
 }
 
@@ -46,10 +31,36 @@ export function fetchToken(
   });
 }
 
+export function validSign() {
+  const query = new URLSearchParams(window.location.search);
+  const passcode = query.get('passcode');
+
+  let url = window.location.href.split('?')[0];
+  url = url.substring(0, url.lastIndexOf('/'));
+
+  return fetch('/sign', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      url: url,
+      passcode2: passcode,
+      roomname: query.get('roomname'),
+      username: query.get('username'),
+      brand: query.get('brand'),
+      ts: query.get('ts'),
+      sign: query.get('sign'),
+      passcode,
+    }),
+  });
+}
+
 export function verifyPasscode(passcode: string) {
   return fetchToken('temp-name', 'temp-room', passcode, false /* create_room */, false /* create_conversation */).then(
     async res => {
       const jsonResponse = await res.json();
+
       if (res.status === 401) {
         return { isValid: false, error: jsonResponse.error?.message };
       }
@@ -119,21 +130,35 @@ export default function usePasscodeAuth() {
   );
 
   useEffect(() => {
-    const passcode = getPasscode();
+    const query = new URLSearchParams(window.location.search);
 
-    if (passcode) {
-      verifyPasscode(passcode)
-        .then(verification => {
-          if (verification?.isValid) {
-            setUser({ passcode } as any);
-            window.sessionStorage.setItem('passcode', passcode);
-            history.replace(window.location.pathname);
-          }
-        })
-        .then(() => setIsAuthReady(true));
-    } else {
-      setIsAuthReady(true);
-    }
+    if (query.get('roomname') != '') window.sessionStorage.setItem('roomname', query.get('roomname') as string);
+    if (query.get('username') != '') window.sessionStorage.setItem('username', query.get('username') as string);
+    if (query.get('brand') != '') window.sessionStorage.setItem('brand', query.get('brand') as string);
+
+    // Check Signature
+    validSign().then(async response => {
+      const signResponse = await response.json();
+
+      if (response.ok && signResponse.valid) {
+        const passcode = getPasscode();
+        if (passcode) {
+          verifyPasscode(passcode)
+            .then(verification => {
+              if (verification?.isValid) {
+                setUser({ passcode } as any);
+                window.sessionStorage.setItem('passcode', passcode);
+                history.replace(window.location.pathname);
+              }
+            })
+            .then(() => setIsAuthReady(true));
+        } else {
+          setIsAuthReady(true);
+        }
+      } else {
+        setIsAuthReady(true);
+      }
+    });
   }, [history]);
 
   const signIn = useCallback((passcode: string) => {

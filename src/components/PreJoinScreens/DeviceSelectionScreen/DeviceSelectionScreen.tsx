@@ -90,10 +90,6 @@ export default function DeviceSelectionScreen({ name, roomName, setStep }: Devic
 
   return (
     <>
-      <Typography variant="h5" className={classes.gutterBottom}>
-        Join Room
-      </Typography>
-
       <Grid container justifyContent="center">
         <Grid item md={7} sm={12} xs={12}>
           <div className={classes.localPreviewContainer}>
